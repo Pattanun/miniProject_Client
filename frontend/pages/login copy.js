@@ -28,12 +28,29 @@ export default function Login({ token }) {
         }
     }
 
-    // const loginForm = () => (
-    //     <div className={styles.gridContainer}>
-
-
-    //     </div>
-    // )
+    const loginForm = () => (
+        <div className={styles.gridContainer}>
+            <div>
+                Username:
+            </div>
+            <div>
+                <input type="text"
+                    name="username"
+                    placeholder="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+            <div>
+                Password:
+            </div>
+            <div>
+                <input type="password"
+                    name="password"
+                    placeholder="password"
+                    onChange={(e) => setPassword(e.target.value)} />
+            </div>
+        </div>
+    )
 
     const copyText = () => {
         navigator.clipboard.writeText(token)
@@ -42,35 +59,33 @@ export default function Login({ token }) {
     return (
         <Layout>
             <Navbar />
+            <div >
+                <div class=" flex justify-center mt-20">
+                    <div class="H-20 w-30 rounded overflow-hidden shadow-lg">
+                        <form class="bg-black rounded shadow-md rounded px-10 pt-15 pb-8 mb-15 ">
+                            <div class="mb-4">{loginForm()}</div>
+                            <div class="mb-6">
+                                <p class="text-slate-200">
+                                    <br></br>
+                                </p>
+                                {status}
 
-            <div class="w-full max-w-xs">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                    <div class="mb-4 ">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+                                <div>
 
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button
+                                    class="bg-white text-black-200 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    type="button"
+                                    onClick={login}
+                                >
+                                    Sign In
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Password
-                        </label>
-                        <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" onChange={(e) => setPassword(e.target.value)} />
-
-                    </div>
-                    <div class="flex items-center justify-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
-                            onClick={login}>
-                            Sign In
-                        </button>
-                        
-                    </div>
-                    <div>
-                   Status:  {status}
-                 </div>
-                </form>
-
+                </div>
             </div>
         </Layout>
     );

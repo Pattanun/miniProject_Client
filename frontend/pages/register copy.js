@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-// import Head from 'next/head'
+import Head from 'next/head'
 import Layout from '../components/layout'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
@@ -74,41 +74,31 @@ export default function Register({ token }) {
 
     return (
         <Layout>
+            <Head>
+                <title>Register</title>
+            </Head>
             <Navbar />
+            <div className={styles.container}>
+                
+                <div className="text-white">
+                <h1>Register</h1>
+                </div>
+                <div className="text-white"><b>Token:</b> {token.substring(0, 15)}...
+                <button
+                        onClick={() => { navigator.clipboard.writeText(token) }}>
+                        Copy token
+                </button>
+                </div>
+                <br />
+            Status:  {status}
+                <br /><br />
+                <div className={styles.content}>
+                    {registerForm()}
+                </div>
 
-            <div class="w-full max-w-xs">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"   onChange={(e) => setUsername(e.target.value)} />
-
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                            Email
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email"    onChange={(e) => setEmail(e.target.value)} />
-
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Password
-                        </label>
-                        <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************"  onChange={(e) => setPassword(e.target.value)}/>
-
-                    </div>
-                    Status:  {status}
-                    <div class="flex items-center justify-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
-                           onClick={register}>
-                           Register
-                        </button>
-
-                    </div>
-                </form>
-
+                <div className=" font-semibold text-white text-xl tracking-tight">
+                    <button onClick={register}>Register</button>
+                </div>
             </div>
         </Layout>
     )

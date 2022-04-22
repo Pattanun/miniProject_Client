@@ -3,13 +3,14 @@ const express = require('express'),
     app = express(),
     passport = require('passport'),
     port = process.env.PORT || 80,
-    cors = require('cors'),
     cookie = require('cookie')
 
 const bcrypt = require('bcrypt')
+const cors = require('cors');
 
 const db = require('./database.js')
 let users = db.users
+let tasks = db.tasks
 
 require('./passport.js')
 
@@ -49,7 +50,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
-router.get('/logout', (req, res) => { 
+router.get('/logout', (req, res) => {
     res.setHeader(
         "Set-Cookie",
         cookie.serialize("token", '', {
@@ -75,9 +76,9 @@ router.post('/register',
     async (req, res) => {
         try {
             const SALT_ROUND = 10
-            const { username, email, password } = req.body 
+            const { username, email, password } = req.body
             if (!username || !email || !password)
-                return res.json( {message: "Cannot register with empty string"})
+                return res.json({ message: "Cannot register with empty string" })
             if (db.checkExistingUser(username) !== db.NOT_FOUND)
                 return res.json({ message: "Duplicated user" })
 
@@ -90,7 +91,13 @@ router.post('/register',
         }
     })
 
-router.get('/alluser', (req,res) => res.json(db.users.users))
+router.get('/alluser', (req, res) => res.json(db.users.users))
+router.get('/alltask', (req, res) => res.json(db.tasks.tasks))
+
+app.use(cors())
+app.get('/', (req, res) => {
+    res.json(tasks)
+})
 
 router.get('/', (req, res, next) => {
     res.send('Respond without authentication');

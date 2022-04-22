@@ -14,8 +14,11 @@ const Navbar = () => (
         Home |
       </a>
 
-      <a href="/tattoo" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+      <a href="/tattoo" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
       See Tattoo |
+      </a>
+      <a href="/todo" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+      Todo
       </a>
       
 
