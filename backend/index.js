@@ -71,14 +71,6 @@ router.get('/profile',
         res.send(req.user)
     });
 
-// เพิ่ม /foo เข้าไป
-router.get('/foo',
-    passport.authenticate('jwt', { session: false }),
-    (req, res, next) => {
-        res.send(req.user)
-        res.send('foo');
-    });
-
 router.post('/register',
     async (req, res) => {
         try {

@@ -11,11 +11,11 @@ const Navbar = () => (
     <div class="text-lg lg:flex-grow">
 
       <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Home
+        Home |
       </a>
 
-      <a href="/profile" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-      Profile
+      <a href="/tattoo" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+      See Tattoo |
       </a>
       
 
