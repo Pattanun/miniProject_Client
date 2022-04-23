@@ -1,119 +1,116 @@
-
-import { useState } from 'react'
-// import Head from 'next/head'
-import Layout from '../components/layout'
-import styles from '../styles/Home.module.css'
-import Navbar from '../components/navbar'
-import axios from 'axios'
-import config from '../config/config'
+import { useState } from "react";
+import Head from "next/head";
+import Layout from "../components/layout";
+import Navbar from "../components/navbar";
+import axios from "axios";
+import config from "../config/config";
 
 export default function Register({ token }) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
 
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [status, setStatus] = useState('')
+  const profileUser = async () => {
+    console.log("token: ", token);
+    const users = await axios.get(`${config.URL}/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("user: ", users.data);
+  };
 
-    const profileUser = async () => {
-        console.log('token: ', token)
-        const users = await axios.get(`${config.URL}/profile`, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-        console.log('user: ', users.data)
+  const register = async (req, res) => {
+    try {
+      let result = await axios.post(`${config.URL}/register`, {
+        username,
+        email,
+        password,
+      });
+      console.log("result: ", result);
+      console.log("result.data:  ", result.data);
+      console.log("token:  ", token);
+      setStatus(result.data.message);
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-    const register = async (req, res) => {
-        try {
-            let result = await axios.post(`${config.URL}/register`,
-                { username, email, password })
-            console.log('result: ', result)
-            console.log('result.data:  ', result.data)
-            console.log('token:  ', token)
-            setStatus(result.data.message)
-        }
-        catch (e) {
-            console.log(e)
-        }
+  const copyText = () => {
+    navigator.clipboard.writeText(token);
+  };
 
-    }
-
-    const registerForm = () => (
-        <div className={styles.gridContainer}>
-            <div className="flex bg-red">
-                Username:
-            </div>
-            <div>
-                <input type="text"
-                    name="username"
-                    placeholder="username"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div>
-                Email:
-            </div>
-            <div>
-                <input type="email"
-                    name="email"
-                    placeholder="email"
-                    onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div>
-                Password:
-            </div>
-            <div>
-                <input type="password"
-                    name="password"
-                    placeholder="password"
-                    onChange={(e) => setPassword(e.target.value)} />
-            </div>
-
+  const registerForm = () => (
+    <div class="px-4 flex items-center justify-center min-h-screen">
+      <div class=" h-50 w-50 px-8 py-6 mt-3 text-left bg-white opacity-95 shadow-lg rounded-lg">
+        <h3 class="mt-4 text-2xl font-bold text-center">Register Admin</h3>
+        <div class="mt-4">
+          {token.substring(0, 15)}...
+          <button onClick={copyText}> Copy token </button>
+          <br />
+          <button
+            class=" w-full h-10 px-6 py-2 mt-4 text-white bg-gray-600 rounded-lg hover:bg-gray-900"
+            onClick={() => {
+              navigator.clipboard.writeText(token);
+            }}
+          >
+            Copy token
+          </button>
         </div>
-    )
-
-
-    return (
-        <Layout>
-            <Navbar />
-
-            <div class="w-full max-w-xs">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"   onChange={(e) => setUsername(e.target.value)} />
-
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                            Email
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email"    onChange={(e) => setEmail(e.target.value)} />
-
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Password
-                        </label>
-                        <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************"  onChange={(e) => setPassword(e.target.value)}/>
-
-                    </div>
-                    Status:  {status}
-                    <div class="flex items-center justify-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
-                           onClick={register}>
-                           Register
-                        </button>
-
-                    </div>
-                </form>
-
+        <br></br>
+        Status: {status}
+        <div class="rounded-md">
+          <div class="mt-4">
+            <label>Username</label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-darker"
+              type="text"
+              name="username"
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div class="mt-4">
+            <label>Email</label>
+            <input
+              class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-darker mb-4"
+              type="email"
+              name="email"
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-darker mb-4"
+              type="password"
+              name="password"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div class="w-96 grid justify-items-center">
+              <button
+                class=" w-full h-10 px-6 py-2 mt-4 text-white bg-gray-600 rounded-lg hover:bg-gray-900"
+                onClick={register}>Register
+              </button>
             </div>
-        </Layout>
-    )
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <Layout>
+      <Head>
+        <title>Register</title>
+      </Head>
+      <Navbar />
+      <body className="backgroundindex">{registerForm()}</body>
+    </Layout>
+  );
 }
 
 export function getServerSideProps({ req, res }) {
-    return { props: { token: req.cookies.token || "" } };
+  return { props: { token: req.cookies.token || "" } };
 }
